@@ -1,74 +1,152 @@
-const inputName = document.querySelector("#input-name");
-const inputNumber = document.querySelector("#input-number");
-const inputMonth = document.querySelector("#input-month");
-const inputYear = document.querySelector("#input-year");
-const inputCVC = document.querySelector("#input-cvc");
-const cardNumber = document.querySelector("#card-number");
-const cardName = document.querySelector("#card-name");
-const cardMonth = document.querySelector("#card-month");
-const cardYear = document.querySelector("#card-year");
-const cardCVC = document.querySelector("#card-cvc");
-const form = document.querySelector("#form");
-const thankYou = document.querySelector("#thank-you");
-const buttonContinue = document.querySelector("#continue");
+// ─── DOM references ────────────────────────────────────────────
+const inputName  = document.querySelector('#input-name');
+const inputNumber = document.querySelector('#input-number');
+const inputMonth = document.querySelector('#input-month');
+const inputYear  = document.querySelector('#input-year');
+const inputCVC   = document.querySelector('#input-cvc');
 
-inputName.addEventListener("input", () => {
-    cardName.innerText = inputName.value;
+const cardNumber = document.querySelector('#card-number');
+const cardName   = document.querySelector('#card-name');
+const cardMonth  = document.querySelector('#card-month');
+const cardYear   = document.querySelector('#card-year');
+const cardCVC    = document.querySelector('#card-cvc');
 
-    if (inputName.value.length === 0) {
-        cardName.innerText = "Jane Appleseed";
-    }
-})
+const form        = document.querySelector('#form');
+const thankYou    = document.querySelector('#thank-you');
+const btnContinue = document.querySelector('#continue');
 
-var cleave = new Cleave('#input-number', {
-    creditCard: true,
+const errName   = document.querySelector('#err-name');
+const errNumber = document.querySelector('#err-number');
+const errDate   = document.querySelector('#err-date');
+const errCVC    = document.querySelector('#err-cvc');
+
+// ─── Formateo del número (reemplaza Cleave) ───────────────────
+function formatCardNumber(value) {
+  // Solo dígitos, máximo 16
+  const digits = value.replace(/\D/g, '').slice(0, 16);
+  // Grupos de 4
+  return digits.replace(/(.{4})/g, '$1 ').trim();
+}
+
+inputNumber.addEventListener('input', () => {
+  const cursor = inputNumber.selectionStart;
+  const formatted = formatCardNumber(inputNumber.value);
+  inputNumber.value = formatted;
+  // Actualiza tarjeta
+  cardNumber.textContent = formatted || '0000 0000 0000 0000';
+  clearError(inputNumber, errNumber);
 });
 
-inputNumber.addEventListener("input", () => {
-    cardNumber.innerText = inputNumber.value;
+// ─── Live preview — otros campos ─────────────────────────────────
+inputName.addEventListener('input', () => {
+  cardName.textContent = inputName.value.trim() || 'Jane Appleseed';
+  clearError(inputName, errName);
+});
 
-    if (inputNumber.value.length === 0) {
-        cardNumber.innerText = "0000 0000 0000 0000";
-    }
-})
+inputMonth.addEventListener('input', () => {
+  inputMonth.value = inputMonth.value.replace(/\D/g, '').slice(0, 2);
+  cardMonth.textContent = inputMonth.value || '00';
+  clearError(inputMonth, errDate);
+  errDate.textContent = '';
+});
 
-inputMonth.addEventListener("input", () => {
-    cardMonth.innerText = inputMonth.value;
+inputYear.addEventListener('input', () => {
+  inputYear.value = inputYear.value.replace(/\D/g, '').slice(0, 2);
+  cardYear.textContent = inputYear.value || '00';
+  clearError(inputYear, errDate);
+  errDate.textContent = '';
+});
 
-    if (inputMonth.value.length === 0) {
-        cardMonth.innerText = "00";
-    }
-})
+inputCVC.addEventListener('input', () => {
+  inputCVC.value = inputCVC.value.replace(/\D/g, '').slice(0, 3);
+  cardCVC.textContent = inputCVC.value || '000';
+  clearError(inputCVC, errCVC);
+});
 
-inputYear.addEventListener("input", () => {
-    cardYear.innerText = inputYear.value;
+// ─── Helpers validación ──────────────────────────────────────────
+function setError(input, msgEl, message) {
+  msgEl.textContent = message;
+  input.classList.add('error');
+}
+function clearError(input, msgEl) {
+  msgEl.textContent = '';
+  input.classList.remove('error');
+}
 
-    if (inputYear.value.length === 0) {
-        cardYear.innerText = "00";
-    }
-})
+// ─── Validación ──────────────────────────────────────────────────
+function validateAll() {
+  let valid = true;
 
-inputCVC.addEventListener("input", () => {
-    cardCVC.innerText = inputCVC.value;
+  if (!inputName.value.trim()) {
+    setError(inputName, errName, "Can't be blank");
+    valid = false;
+  } else {
+    clearError(inputName, errName);
+  }
 
-    if (inputCVC.value.length === 0) {
-        cardCVC.innerText = "000";
-    }
-})
+  const digits = inputNumber.value.replace(/\s/g, '');
+  if (!digits) {
+    setError(inputNumber, errNumber, "Can't be blank");
+    valid = false;
+  } else if (!/^\d{13,16}$/.test(digits)) {
+    setError(inputNumber, errNumber, 'Wrong format, numbers only');
+    valid = false;
+  } else {
+    clearError(inputNumber, errNumber);
+  }
 
-form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    form.classList.add("disabled");
-    thankYou.classList.remove("disabled");
-})
+  const m = parseInt(inputMonth.value, 10);
+  const y = parseInt(inputYear.value, 10);
+  if (!inputMonth.value || !inputYear.value) {
+    setError(inputMonth, errDate, "Can't be blank");
+    valid = false;
+  } else if (isNaN(m) || m < 1 || m > 12) {
+    setError(inputMonth, errDate, 'Invalid month');
+    valid = false;
+  } else if (isNaN(y) || inputYear.value.length < 2) {
+    setError(inputMonth, errDate, 'Invalid year');
+    valid = false;
+  } else {
+    clearError(inputMonth, errDate);
+    errDate.textContent = '';
+  }
 
-buttonContinue.addEventListener("click", () => {
-    form.classList.remove("disabled");
-    thankYou.classList.add("disabled");
-    form.reset();
-    cardName.innerText = "Jane Appleseed";
-    cardNumber.innerText = "0000 0000 0000 0000";
-    cardMonth.innerText = "00";
-    cardYear.innerText = "00";
-    cardCVC.innerText = "000";
-})
+  if (!inputCVC.value) {
+    setError(inputCVC, errCVC, "Can't be blank");
+    valid = false;
+  } else if (!/^\d{3}$/.test(inputCVC.value)) {
+    setError(inputCVC, errCVC, 'Must be 3 digits');
+    valid = false;
+  } else {
+    clearError(inputCVC, errCVC);
+  }
+
+  return valid;
+}
+
+// ─── Submit ──────────────────────────────────────────────────────
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  if (!validateAll()) return;
+  form.classList.add('hidden');
+  thankYou.classList.remove('hidden');
+});
+
+// ─── Continue / reset ────────────────────────────────────────────
+btnContinue.addEventListener('click', () => {
+  thankYou.classList.add('hidden');
+  form.classList.remove('hidden');
+  form.reset();
+
+  cardName.textContent   = 'Jane Appleseed';
+  cardNumber.textContent = '0000 0000 0000 0000';
+  cardMonth.textContent  = '00';
+  cardYear.textContent   = '00';
+  cardCVC.textContent    = '000';
+
+  [inputName, inputNumber, inputMonth, inputYear, inputCVC].forEach(i => i.classList.remove('error'));
+  [errName, errNumber, errDate, errCVC].forEach(el => el.textContent = '');
+});
+
+// ─── Init ────────────────────────────────────────────────────────
+thankYou.classList.add('hidden');

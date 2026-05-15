@@ -3,81 +3,127 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
-  <title>Frontend Mentor | Interactive card details form</title>
+  <title>Card Details · Interactive Form</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./main.css">
 </head>
 <body>
 
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
   <main class="wrapper">
 
-    <div class="card">
-      <div class="card-front">
-        <img src="./images/bg-card-front.png" alt="Frente de la tarjeta">
-        <div class="card-front__data">
-          <img src="./images/card-logo.svg" alt="">
-          <div>
-            <p class="card-number" id="card-number">0000 0000 0000 0000</p>
-            <div class="card-name-date">
-              <p class="card-name" id="card-name">Jane Appleseed</p>
-              <p class="card-date">
-                <span id="card-month">00</span>/<span id="card-year">00</span>
-              </p>
+    <!-- Cards -->
+    <section class="cards-panel">
+
+      <!-- Back card -->
+      <div class="card-wrap card-back-wrap">
+        <div class="card-cvc-area">
+          <span class="card-cvc" id="card-cvc">000</span>
+        </div>
+      </div>
+
+      <!-- Front card -->
+      <div class="card-wrap card-front-wrap">
+        <div class="card-top">
+          <div class="chip"></div>
+          <svg class="nfc-icon" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2">
+            <path d="M4.93 4.93a10 10 0 0 0 0 14.14M7.76 7.76a6 6 0 0 0 0 8.49M10.6 10.6a2 2 0 0 0 0 2.83"/>
+          </svg>
+          <div class="card-logo-circles">
+            <span></span><span></span>
+          </div>
+        </div>
+        <div class="card-bottom">
+          <p class="card-number" id="card-number">0000 0000 0000 0000</p>
+          <div class="card-meta">
+            <span class="card-name" id="card-name">Jane Appleseed</span>
+            <span class="card-date">
+              <span id="card-month">00</span>/<span id="card-year">00</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Form -->
+    <section class="form-panel">
+      <div class="form-container" id="form-container">
+
+        <div class="form-header">
+          <p class="form-eyebrow">Secure Payment</p>
+          <h1 class="form-title">Card Details</h1>
+        </div>
+
+        <form class="form" id="form" novalidate>
+
+          <div class="field">
+            <label for="input-name">Cardholder Name</label>
+            <div class="input-wrap">
+              <input type="text" id="input-name" placeholder="e.g. Jane Appleseed" autocomplete="cc-name">
+            </div>
+            <p class="error-msg" id="err-name"></p>
+          </div>
+
+          <div class="field">
+            <label for="input-number">Card Number</label>
+            <div class="input-wrap">
+              <input type="text" id="input-number" placeholder="0000 0000 0000 0000" inputmode="numeric">
+            </div>
+            <p class="error-msg" id="err-number"></p>
+          </div>
+
+          <div class="fields-row">
+            <div class="field">
+              <label>Expiry Date</label>
+              <div class="inputs-inline">
+                <div class="input-wrap mini">
+                  <input type="text" id="input-month" placeholder="MM" maxlength="2" inputmode="numeric">
+                </div>
+                <div class="input-wrap mini">
+                  <input type="text" id="input-year" placeholder="YY" maxlength="2" inputmode="numeric">
+                </div>
+              </div>
+              <p class="error-msg" id="err-date"></p>
+            </div>
+
+            <div class="field">
+              <label for="input-cvc">CVC</label>
+              <div class="input-wrap">
+                <input type="text" id="input-cvc" placeholder="e.g. 123" maxlength="3" inputmode="numeric">
+              </div>
+              <p class="error-msg" id="err-cvc"></p>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="card-back">
-        <img src="./images/bg-card-back.png" alt="Dorso de la tarjeta">
-        <div class="card-back__data">
-          <p class="card-cvc" id="card-cvc">000</p>
-        </div>
-      </div>
-    </div>
 
-    <div class="form-wrapper">
-      <form class="form" id="form">
-        <div class="form-group">
-          <label for="input-name" class="label">Cardholder Name</label>
-          <input type="text" class="input" id="input-name" placeholder="e.g. Jane Appleseed" required>
-        </div>
-        <div class="form-group">
-          <label for="input-number" class="label">Card Number</label>
-          <input type="text" class="input" id="input-number" placeholder="e.g. 1234 5678 9123 0000" required>
-        </div>
-        <div class="form-group double">
-          <div class="rows">
-            <label for="input-month" class="label">Exp. Date (MM/YY)</label>
-            <div class="columns">
-              <input type="text" class="input" id="input-month" placeholder="MM" maxlength="2" required>
-              <input type="text" class="input" id="input-year" placeholder="YY" maxlength="2" required>
-            </div>
+          <button class="btn-submit" type="submit">
+            <span class="btn-text">Confirm</span>
+            <span class="btn-icon">→</span>
+          </button>
+
+        </form>
+
+        <!-- Success -->
+        <div class="success hidden" id="thank-you">
+          <div class="success-icon">
+            <img src="./images/icon-complete.svg" alt="Success">
           </div>
-          <div class="rows">
-            <label for="input-cvc" class="label">CVC</label>
-            <input type="text" class="input" id="input-cvc" placeholder="e.g. 123" maxlength="3" required>
-          </div>
+          <h2 class="success-title">Thank you!</h2>
+          <p class="success-text">We've added your card details</p>
+          <button class="btn-submit" id="continue">Continue</button>
         </div>
-        <div class="form-group">
-          <button class="button" type="submit">Confirm</button>
-        </div>
-      </form>
-      
-      <div class="thank-you disabled" id="thank-you">
-        <img src="./images/icon-complete.svg" alt="Ícono de completado">
-        <p class="thank-you-title">Thank you!</p>
-        <p class="thank-you-text">We've added your card details</p>
-        <button class="button" id="continue">Continue</button>
+
       </div>
-    </div>
-
-
+    </section>
 
   </main>
 
-
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.0.2/cleave.min.js" integrity="sha512-SvgzybymTn9KvnNGu0HxXiGoNeOi0TTK7viiG0EGn2Qbeu/NFi3JdWrJs2JHiGA1Lph+dxiDv5F9gDlcgBzjfA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="./main.js"></script>
 </body>
 </html>
