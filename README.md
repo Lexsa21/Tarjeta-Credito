@@ -1,12 +1,10 @@
 # Formulario Interactivo de Tarjeta de Crédito
 
-Formulario interactivo con previsualización de tarjeta en tiempo real. Desarrollado como solución a un challenge de [Frontend Mentor](https://www.frontendmentor.io), rediseñado con una estética dark luxury.
+Formulario interactivo con previsualización de tarjeta en tiempo real, rediseñado con una estética dark luxury.
 
 ## Vista previa
 
 ![Formulario de tarjeta](./images/preview.png)
-
-> Completá los campos y mirá cómo la tarjeta se actualiza en tiempo real ✦
 
 ---
 
@@ -32,7 +30,7 @@ Formulario interactivo con previsualización de tarjeta en tiempo real. Desarrol
 ## Lo que aprendí
 
 - Manejo de actualizaciones del DOM en tiempo real con el evento `input`
-- Formateo de inputs (agrupación del número de tarjeta) sin librerías externas
+- Formateo de inputs sin librerías externas
 - Técnica de apilamiento con CSS Grid para superponer elementos de forma confiable
 - Patrones de validación de formularios sin dependencias de terceros
 - Diseño responsive con enfoque mobile-first
@@ -44,9 +42,8 @@ Formulario interactivo con previsualización de tarjeta en tiempo real. Desarrol
 No requiere herramientas de build ni dependencias.
 
 ```bash
-git clone https://github.com/tu-usuario/interactive-card-form.git
-cd interactive-card-form
-# Abrí index.html en tu navegador — eso es todo
+git clone https://github.com/Lexsa21/Tarjeta-Credito.git
+cd Tarjeta-Credito
 ```
 
 O simplemente abrí `index.html` directamente en cualquier navegador moderno.
@@ -66,6 +63,9 @@ O simplemente abrí `index.html` directamente en cualquier navegador moderno.
 
 ---
 
-## Créditos
+## Autor
 
-Challenge original de [Frontend Mentor](https://www.frontendmentor.io/challenges/interactive-card-details-form-XpS8cKZDWw).
+**Axel Estrada**
+- GitHub: [@Lexsa21](https://github.com/Lexsa21)
+- LinkedIn: [axeelestrada](https://www.linkedin.com/in/axeelestrada)
+- Portfolio: _próximamente_
